@@ -1,4 +1,4 @@
-name: LumiROM Tools Beta
+name: LumiROM Tools Ui 8
 
 on:
   workflow_dispatch:
