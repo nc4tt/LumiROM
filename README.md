@@ -1,3 +1,4 @@
+[![aqk build system](https://github.com/nc4tt/aquak/actions/workflows/aqk.yml/badge.svg)](https://github.com/nc4tt/aquak/actions/workflows/aqk.yml)
 ```
 aquak - key is aquari0x
 
