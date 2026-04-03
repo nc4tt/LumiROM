@@ -11,10 +11,10 @@ IS_OFFICIAL() {
         echo "ROM_TAG=key is aquari0xk" >> "$GITHUB_ENV"
     else
         export BUILD_STATUS="UNOFFICIAL"
-        export ROM_TAG"key is aqk_unofficial"
+        export ROM_TAG="key is aqk_unofficial"
         
         echo "BUILD_STATUS=UNOFFICIAL" >> "$GITHUB_ENV"
-        echo "ROM_TAG=key is aqk_unofficial" >> "$GITHUB_ENV"
+        echo ROM_TAG="key is aqk_unofficial" >> "$GITHUB_ENV"
     fi
 
     echo "--- $ROM_TAG detected ---"
