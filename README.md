@@ -32,4 +32,8 @@ this project is licensed under the MIT License - see the LICENSE file for detail
 - platform_build - Licensed under Apache License 2.0
 - e2fsprogs - Licensed under GPL-2.0 / LGPL-2.1
 - img2sdat - Licensed under the MIT License
+
+credits:
+- @Luminous418 | base
+- @H33CKER | contributor
 ```
