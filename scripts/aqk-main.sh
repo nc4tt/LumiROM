@@ -1,20 +1,20 @@
 #!/bin/bash
 
 IS_OFFICIAL() {
-    CURRENT_SIGNATURE=$(printf "%s" "$LUMIROM_BUILD" | sha256sum | cut -d ' ' -f 1)
+    CURRENT_SIGNATURE=$(printf "%s" "$AQK_BUILD" | sha256sum | cut -d ' ' -f 1)
 
     if [ "$CURRENT_SIGNATURE" == "$OFFICIAL_HASH" ]; then
         export BUILD_STATUS="OFFICIAL"
-        export ROM_TAG="✨ LumiROM Official Build"
+        export ROM_TAG="key is aquari0xk"
         
         echo "BUILD_STATUS=OFFICIAL" >> "$GITHUB_ENV"
-        echo "ROM_TAG=✨ LumiROM Official Build" >> "$GITHUB_ENV"
+        echo "ROM_TAG=key is aquari0xk" >> "$GITHUB_ENV"
     else
         export BUILD_STATUS="UNOFFICIAL"
-        export ROM_TAG="🛠️ LumiROM Unofficial Build"
+        export ROM_TAG"key is aqk_unofficial"
         
         echo "BUILD_STATUS=UNOFFICIAL" >> "$GITHUB_ENV"
-        echo "ROM_TAG=🛠️ LumiROM Unofficial Build" >> "$GITHUB_ENV"
+        echo "ROM_TAG=key is aqk_unofficial" >> "$GITHUB_ENV"
     fi
 
     echo "--- $ROM_TAG detected ---"
@@ -854,7 +854,7 @@ APPLY_STOCK_CONFIG() {
 
     # Fix unsupported BPF error for kernels lower than 5.10.
     if [ "$USE_UI_8_TETHERING_APEX" = "True" ]; then
-        cp -rfa "$(pwd)/LumiROM/Mods/bpf_patch/." "$EXTRACTED_FIRM_DIR/"
+        cp -rfa "$(pwd)/aqx-stuff/Mods/bpf_patch/." "$EXTRACTED_FIRM_DIR/"
     fi
 
 	# Replace Stock Files.
@@ -1073,15 +1073,15 @@ APPLY_FEATURES() {
     BUILD_PROP "$EXTRACTED_FIRM_DIR" "ro.slmk.use_lowmem_keep_except" "true"
 
     if [ "$BUILD_STATUS" == "OFFICIAL" ]; then
-        BUILD_PROP "$EXTRACTED_FIRM_DIR" "ro.lumirom.official" "true"
+        BUILD_PROP "$EXTRACTED_FIRM_DIR" "ro.aqkey.official" "true"
     else
-        BUILD_PROP "$EXTRACTED_FIRM_DIR" "ro.lumirom.official" "false"
+        BUILD_PROP "$EXTRACTED_FIRM_DIR" "ro.aqkey.official" "false"
     fi
 
     echo "- Adding Mods..."
 	if [ ! -d "$EXTRACTED_FIRM_DIR/product/priv-app/AiWallpaper" ]; then
         mkdir -p "$EXTRACTED_FIRM_DIR/product/priv-app/AiWallpaper"
-        cp -rfa "$(pwd)/LumiROM/Mods/Apps/AiWallpaper/"* "$EXTRACTED_FIRM_DIR/product/priv-app/AiWallpaper/"
+        cp -rfa "$(pwd)/aqk-sruff/Mods/Apps/AiWallpaper/"* "$EXTRACTED_FIRM_DIR/product/priv-app/AiWallpaper/"
     fi
 
 	if [ ! -d "$EXTRACTED_FIRM_DIR/system/system/priv-app/PhotoEditor_AIFull" ]; then
@@ -1093,17 +1093,17 @@ APPLY_FEATURES() {
 		rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/shadowremoval"
 		rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/style_transfer"
 	    rm -rf "$EXTRACTED_FIRM_DIR/system/system/priv-app"/PhotoEditor_*
-        cp -rfa "$(pwd)/LumiROM/Mods/Apps/PhotoEditor_AIFull/"* "$EXTRACTED_FIRM_DIR/system/system/"
+        cp -rfa "$(pwd)/aqk-stuff/Mods/Apps/PhotoEditor_AIFull/"* "$EXTRACTED_FIRM_DIR/system/system/"
 		unzip -o "$EXTRACTED_FIRM_DIR/system/system/priv-app/PhotoEditor_AIFull.zip" -d "$EXTRACTED_FIRM_DIR/system/system/priv-app/" >/dev/null 2>&1
 		rm -f "$EXTRACTED_FIRM_DIR/system/system/priv-app/PhotoEditor_AIFull.zip"
     fi
 
     # For every new mod, add it with all route, until I remake the script
-    sudo cp -rfa "$(pwd)/LumiROM/Mods/Files/system/system/bin/"* "$EXTRACTED_FIRM_DIR/system/system/bin/"
-    sudo cp -rfa "$(pwd)/LumiROM/Mods/Files/system/system/etc/"* "$EXTRACTED_FIRM_DIR/system/system/etc/"
-    sudo cp -rfa "$(pwd)/LumiROM/Mods/vulkan_fix/system/system/lib64/"* "$EXTRACTED_FIRM_DIR/system/system/lib64/"
-    sudo cp -rfa "$(pwd)/LumiROM/Mods/volte_fix/vendor/lib64/"* "$EXTRACTED_FIRM_DIR/vendor/lib64/"
-    sudo cp -rfa "$(pwd)/LumiROM/Mods/tweaks/system/system/etc/init/"* "$EXTRACTED_FIRM_DIR/system/system/etc/init/"
+    sudo cp -rfa "$(pwd)/aqk-stuff/Mods/Files/system/system/bin/"* "$EXTRACTED_FIRM_DIR/system/system/bin/"
+    sudo cp -rfa "$(pwd)/aqk-stuff/Mods/Files/system/system/etc/"* "$EXTRACTED_FIRM_DIR/system/system/etc/"
+    sudo cp -rfa "$(pwd)/aqk-stuff/Mods/vulkan_fix/system/system/lib64/"* "$EXTRACTED_FIRM_DIR/system/system/lib64/"
+    sudo cp -rfa "$(pwd)/aqk-stuff/Mods/volte_fix/vendor/lib64/"* "$EXTRACTED_FIRM_DIR/vendor/lib64/"
+    sudo cp -rfa "$(pwd)/aqk-stuff/Mods/tweaks/system/system/etc/init/"* "$EXTRACTED_FIRM_DIR/system/system/etc/init/"
 
     # Fix Samsung AI Photo Editor Crash.
 	sed -i '0,/"ModelType": "MODEL_TYPE_INSTANCE_CAPTURE"/s//"ModelType": "MODEL_TYPE_OBJ_INSTANCE_CAPTURE"/' "$EXTRACTED_FIRM_DIR/system/system/cameradata/portrait_data/single_bokeh_feature.json"
@@ -1149,7 +1149,7 @@ APPENDING_DISPLAY_ID() {
     # Add a name to build ID, doesnt delete the line, it adds at the end
 	local EXTRACTED_FIRM_DIR="$1"
 
-    APPEND_DISPLAY_ID "$1" "LumiROM $LUMIROM_VERSION $BUILD_STATUS Stable"
+    APPEND_DISPLAY_ID "$1" "aquari0xk_0x1 $AQK_VERSION $BUILD_STATUS ena"
 }
 
 GEN_FS_CONFIG() {
@@ -1264,7 +1264,7 @@ BUILD_IMG() {
     local EXTRACTED_FIRM_DIR="$1"
     local FILE_SYSTEM="$2"
 	local OUT_DIR="$3"
-    local DEVICE_CONFIG="$(pwd)/LumiROM/Devices/${STOCK_DEVICE}/config"
+    local DEVICE_CONFIG="$(pwd)/aqk-stuff/Devices/${STOCK_DEVICE}/config"
     local OP_LIST="$(pwd)/template/dynamic_partitions_op_list"
 
     if [[ -f "$DEVICE_CONFIG" ]]; then

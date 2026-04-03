@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script does exactly the same as OneUi8-5.yml
+# This script does exactly the same as aqk.yml
 # but does all in local so no need to use GitHub
 
 # First use the setup_directories.sh script to setup directories (isn't obvious?)
@@ -15,10 +15,10 @@ trap '{
     CMD=${BASH_COMMAND}
 
     echo ""
-    echo "❌ Build failed!"
-    echo "➡️ Line     : $LINE_NO"
-    echo "➡️ Command  : $CMD"
-    echo "➡️ Exit code: $EXIT_CODE"
+    echo "[?!] build failed!"
+    echo "-> line     : $LINE_NO"
+    echo "-> command  : $CMD"
+    echo "-> exit code: $EXIT_CODE"
     echo ""
 
     exit $EXIT_CODE
@@ -35,21 +35,21 @@ export STOCK_DEVICE="$1"
 export USE_UI_8_TETHERING_APEX="$2"
 export TARGET_DEVICE="$STOCK_DEVICE"
 export OUTPUT_FILESYSTEM="erofs"
-export LUMIROM_VERSION=8.6.0
+export AQK_VERSION=1.0.0
 
 # Directories
 export OUT_DIR="$(pwd)/OUT"
 export WORK_DIR="$(pwd)/WORK"
 export FIRM_DIR="$(pwd)/FIRMWARE"
-export DEVICES_DIR="$(pwd)/LumiROM/Devices"
+export DEVICES_DIR="$(pwd)/aqk-stuff/Devices"
 export APKTOOL="$(pwd)/bin/apktool/apktool.jar"
-export VNDKS_COLLECTION="$(pwd)/LumiROM/vndks"
+export VNDKS_COLLECTION="$(pwd)/aqk-stuff/vndks"
 
 # Partitions to build
 export BUILD_PARTITIONS="product,vendor,odm,system_ext,system"
 
 # Source
-source "$(pwd)/scripts/LumiROM.sh"
+source "$(pwd)/scripts/aqk-main.sh"
 source "$DEVICES_DIR/$STOCK_DEVICE/config"
 
 # Download firmware
@@ -95,7 +95,7 @@ PATCH_PRIVATE_SHARE "$WORK_DIR/services"
 DISABLE_SIGNATURE_VERIFICATION "$WORK_DIR/services"
 
 # Recompile framework
-source "$(pwd)/scripts/LumiROM.sh"
+source "$(pwd)/scripts/aqk-main.sh"
 RECOMPILE "$APKTOOL" "$WORK_DIR/ssrm" "$FIRM_DIR/$TARGET_DEVICE/system/system/framework" "$WORK_DIR"
 RECOMPILE "$APKTOOL" "$WORK_DIR/services" "$FIRM_DIR/$TARGET_DEVICE/system/system/framework" "$WORK_DIR"
 cp -fv "$WORK_DIR"/*.jar "$FIRM_DIR/$TARGET_DEVICE/system/system/framework/"
